@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xtoucher.dao.ProgressDao">
+	<resultMap id="AccountMap" type="com.xtoucher.model.ProgressModel">
+	</resultMap>
+	<!--查询进度 -->
+	<select id="progressSearch" resultType="com.xtoucher.model.ProgressModel">
+		select u.real_name as
+		'userName',d.dog_name as 'dogName',d.varieties,p.create_time as
+		'submitTime',d.img_url as 'imgUrl',p.id,p.status 
+		from e_user u,e_dog d,e_approval p
+		where
+		u.dog_id=d.id
+		and p.user_id=u.id
+		and
+		u.phone_num=#{1} 
+		and u.idcard_num=#{0}
+		and p.is_deleted != '1'
+	</select>
+	<!--查询审批历史 -->
+	<select id="progressHistory" resultType="com.xtoucher.model.ProgressHistoryModel">
+		select id, approval_id
+		as 'approvalId' ,account_id as 'accountId' ,handle_time as
+		'handleTime' ,remark from e_approval_history where approval_id=#{0}
+		order by handle_time desc
+		limit 1
+	</select>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xtoucher.dao.AreaDao">
+	<resultMap id="areaMap" type="com.xtoucher.model.AreaModel">
+	</resultMap>
+	<!-- 查询所有 -->
+	<select id="qeuryArea" resultType="com.xtoucher.model.AreaModel">
+		Select id,area,parent_id as 'parentId' from e_area 
+	</select>
+	<!-- 查询大区域  -->
+	<select id="queryAreaPr" resultType="com.xtoucher.model.AreaModel">
+		Select id,area,parent_id as 'parentId' 
+		from e_area where parent_id is null
+	</select>
+	<!--根据id查询  -->
+	<select id="queryAreaModel" resultType="com.xtoucher.model.AreaModel">
+		Select id,area,parent_id as 'parentId' 
+		from e_area where id=#{id}
+	</select>
+	<!--更新街道  -->
+		<update id="updateArea" parameterType="com.xtoucher.model.AreaModel">
+			update e_area set 
+			area=#{area},parent_id=#{parentId} 
+			where id=#{id} 
+		</update>
+	<!--添加街道  -->
+	<insert id="addArea" parameterType="com.xtoucher.model.AreaModel">
+		insert into e_area  set area=#{area},parent_id=#{parentId} 
+	</insert>
+	<!--删除街道  -->
+	<delete id="deleteArea" parameterType="com.xtoucher.model.AreaModel">
+		delete from
+		e_area where id=#{id}
+	</delete>
+	
+	
+	
+	
+</mapper>
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 张煜 2017-09-07 15:26 添加本DogFxml文档 -->
+<mapper namespace="com.xtoucher.dao.DogForbiddenDao">
+	<resultMap id="DogFMap" type="com.xtoucher.model.DogForbiddenModel">
+	</resultMap>
+
+	<!-- 查询禁养犬 -->
+	<select id="queryDogFor" resultMap="DogFMap">
+		select id,detail from e_dog_forbidden limit 1
+	</select>
+	
+	<!-- 更新禁养犬 -->
+	<update id="updateDogFor" parameterType="com.xtoucher.model.DogForbiddenModel">
+		update e_dog_forbidden set detail=#{detail}
+	</update>
+	
+	
+</mapper>

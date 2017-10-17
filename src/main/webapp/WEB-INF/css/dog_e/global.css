@@ -1,0 +1,135 @@
+/**
+*公共样式
+*/
+/*----- reset -----*/
+html, body {
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  background-color: #f2f2f2;
+  color:#333333;
+  margin: 0;
+  padding: 0;
+}
+input,textarea {
+  margin:0;
+  padding:0;
+  outline:none;
+  border:none;
+}
+textarea {
+  resize:none;
+  overflow:auto;
+}
+ul,li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+a,input{              /* 高亮处理 */
+  -webkit-tap-highlight-color:rgba(255,0,0,0);
+  }
+h3 {
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 42px;
+  text-align: left;
+  margin-left: 21px;
+}
+img {
+  width: 100%;
+  vertical-align: top;
+}
+.scrollWrap{
+  position: relative;
+  height: 100%;
+  min-height: 480px;
+  overflow: auto;
+}
+.weui-cells_form {
+  margin: 0 15px;
+  font-size: 14px;
+}
+.weui-cell {
+  padding: 0;
+  margin: 0;
+  text-indent: 10px;
+  line-height: 40px;
+  border: 1px solid #e6e6e6;
+  border-bottom: none;
+}
+.last {
+  border-bottom: 1px solid #e6e6e6;
+}
+
+/*========= imgup ============*/
+.file {
+	width: 50px;
+   	height: 50px;
+   	margin-top: 10px;
+	margin-right: 10px;
+	background: url(./img/up_btn.png) no-repeat;
+	background-size: cover;
+}
+.file input {
+	display: none;
+}
+.weui-cell .img_preview span {
+	line-height: 20px;
+	margin-bottom: -10px;
+}
+.img_preview {
+	width:78%;
+}
+.s_pic #preview {
+	width:63.95%;
+	height:180px;
+	margin-left: 60px;
+	margin-bottom: 10px;
+	border:1px solid #E6E6E6;
+	overflow:hidden;
+}
+.l_pic #preview {
+	width:94.29%;
+	height:180px;
+	border:1px solid #E6E6E6;
+	margin:0 auto 10px;
+	overflow:hidden;
+}
+.imghead {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);
+	width:100%;
+	vertical-align:top;
+}
+
+/* ====clear float====== */
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.clear:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/*========submit button=========*/
+.submit{
+  background:#73b5ff;
+  color:#fffeff;
+}
+.next{
+   width: 29.33%;
+   display: block;
+   margin: 30px auto;
+   font-size: 16px;
+   line-height: 40px;
+   border-radius: 10px;
+}

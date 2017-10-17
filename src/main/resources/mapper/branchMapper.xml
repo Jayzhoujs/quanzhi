@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 张煜  2017-09-06 9:42 添加本xml文档 -->
+<mapper namespace="com.xtoucher.dao.BranchDao">
+	<resultMap id="BranchMap" type="com.xtoucher.model.BranchModel">
+	</resultMap> 
+	
+	<!--查询警务所有地区 -->
+	<select id="queryBranchList" resultMap="BranchMap">
+		select id, name ,parent_id as 'parentId'
+		from e_branch 
+		order by parent_id
+	</select>
+	<!--查询警务所有大区 -->
+	<select id="queryBranch" resultMap="BranchMap">
+		select id, name from e_branch where parent_id is null
+	</select>
+	<!--根据上级id查询警务所有派出所 -->
+	<select id="queryBranchA" resultMap="BranchMap">
+		select id, name,parent_id as 'parentId' from e_branch where parent_id=#{id}
+	</select>
+	<!--查询派出所列表 -->
+	<select id="getPoliceOfficeList" resultMap="BranchMap">
+		select id,name,parent_id as 'parentId' from e_branch
+		where parent_id is not null
+	</select>
+	<!--查询分局列表 -->
+	<select id="getOfficeList" resultMap="BranchMap">
+		select id, name from e_branch
+		where parent_id is null
+	</select>
+	<!--根据id查询 -->
+	<select id="queryId" resultType="com.xtoucher.model.BranchModel">
+		select id,name,parent_id as 'parentId' 
+		from e_branch
+		where id=#{id}
+	</select>
+	
+	<!--添加区域 -->
+	<insert id="addBranch" parameterType="com.xtoucher.model.BranchModel">
+		insert into e_branch 
+		set 
+		name=#{name},parent_id=#{parentId}	
+	</insert>
+	
+	<!--更新区域 -->
+	<update id="updateBranch" parameterType="com.xtoucher.model.BranchModel">
+		update e_branch set 
+		name=#{name},parent_id=#{parentId}
+		where 
+		id=#{id}
+	</update>
+	
+	<!--删除区域 -->
+	<delete id="deleteBranch" parameterType="com.xtoucher.model.BranchModel">
+		delete from
+		e_branch where id=#{id}
+	</delete>
+	
+	<!--关键字查询派出所网点列表 -->
+	<select id="getPoliceOfficeListByKeyWord" resultMap="BranchMap">
+		select id, name from e_branch where parent_id is not null
+		and name like CONCAT('%',#{0},'%')
+	</select>
+	
+	<!--关键字查询分局网点列表 -->
+	<select id="getBranchListByKeyWord" resultMap="BranchMap">
+		select id, name from e_branch where parent_id is null
+		and name like CONCAT('%',#{0},'%')
+	</select>
+	
+	<!--根据id查询列表 -->
+	<select id="getBranchById" resultMap="BranchMap">
+		select id, name ,parent_id as 'parentId'
+		from e_branch 
+		where id=#{0}
+	</select>
+	
+</mapper>

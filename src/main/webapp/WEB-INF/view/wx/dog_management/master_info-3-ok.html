@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>个人犬主信息登记</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="../../../lib/weui.min.css">
+  <link rel="stylesheet" href="../../../css/jquery-weui.css">
+  <style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 28px;
+      background-color: #f2f2f2;
+      color:#333333;
+      margin: 0;
+      padding: 0;
+  }
+	input,textarea {					/* ----------------reset------*/
+		margin:0;
+		padding:0;
+		outline:none;
+		border:none;
+	}
+	textarea {							/* ----------------reset------*/
+		resize:none;
+		overflow:auto;
+	}
+
+	a,input{ -webkit-tap-highlight-color:rgba(255,0,0,0); }   /* 处理高亮 */
+
+  h3 {							/*  ---------------公共类  */
+    text-align: center;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 56px;
+  }
+	.weui-textarea {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		list-style: none;
+		resize: none;
+		border-left: 0 solid;
+		border-right: 0 solid;
+	}
+	.textarea {
+		margin: 0;
+		padding: 0;
+	}
+	.scrollWrap{									/*---------公共类-------*/
+		position: relative;
+		height: 100%;
+		min-height: 480px;
+		overflow: auto;
+	}
+	h3 {							/*  ---------------公共类  */
+    text-align: center;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 56px;
+  }
+
+  .weui-cells_form {								/*---------公共类-------*/
+    margin: 0 15px;
+		font-size: 14px;
+  }
+  .weui-cell {											/*---------公共类-------*/
+  	padding: 0;
+		margin: 0;
+		text-indent: 10px;
+  	line-height: 40px;
+		border: 1px solid #e6e6e6;
+		border-bottom: none;
+  }
+	.weui-cell:before {
+		border-top: none;
+	}
+	.weui-cell__hd {
+		width: 43%;
+	}
+	.weui-label{
+		width: 100%;
+	}
+	.weui-cell_hd  label{
+		width: 150px;
+	}
+	.last {
+		border-bottom: 1px solid #e6e6e6;
+	}
+
+	.radio label {
+		margin-right: 26px;
+	}
+
+	h4 {
+		line-height: 38px;
+		background: #f2f2f2;
+		font-size: 14px;
+		font-weight: normal;
+		text-indent: 10px;
+	}
+
+	/*-------- imgup ----------*/			/*---还要改样式---*/
+	.file {
+	width: 50px;
+   	height: 50px;
+   	margin-top: 10px;
+	margin-right: 10px;
+	background: url(./img/up_btn.png) no-repeat;
+	background-size: cover;
+}
+.file input {
+	display: none;
+}
+.weui-cell .img_preview span {
+	line-height: 20px;
+	margin-bottom: -10px;
+}
+.img_preview {
+	width:78%;
+}
+.s_pic #preview {
+	width:63.95%;
+	height:180px;
+	margin-left: 60px;
+	margin-bottom: 10px;
+	border:1px solid #E6E6E6;
+	overflow:hidden;
+}
+.l_pic #preview {
+	width:94.29%;
+	height:180px;
+	border:1px solid #E6E6E6;
+	margin:0 auto 10px;
+	overflow:hidden;
+}
+.imghead {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);
+	width:100%;
+	vertical-align:top;
+}
+
+	/* ====clear float====== */
+	.fl {
+		float: left;
+	}
+	.fr {
+		float: right;
+	}
+	.clear:after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+
+	.submit{			/*  ---------------公共类  */
+		background:#73b5ff;
+		color:#fffeff;
+	}
+  .next{				/*  ---------------公共类  */
+     width: 29.33%;
+     display: block;
+     margin: 30px auto;
+     font-size: 16px;
+     line-height: 40px;
+     border-radius: 10px;
+  }
+	.page {
+		display: none;
+	}
+	.active {
+		display: block;
+	}
+  </style>
+</head>
+
+<body>
+<section class="scrollWrap">
+  <h3>个人犬主信息登记</h3>
+	<form id="lform" action="main-1-ok.html" method="post">
+  <div class="weui-cells weui-cells_form">
+		<div class="weui-cell">
+			<div class="weui-cell__hd"><label for="" class="weui-label">犬主类型：</label></div>
+			<div class="weui-cell__bd radio type">
+				<label><input name="usertype" type="radio" value="master" checked/>&nbsp;&nbsp;个人</label>
+				<label><input name="usertype" type="radio" value="company"/>&nbsp;&nbsp;单位</label>
+			</div>
+		</div>
+		<div style="height:10px;background-color:#f2f2f2;"></div>
+		<div class="page active">
+	    <div class="weui-cell">
+	      <div class="weui-cell__hd"><label for="" class="weui-label title">身份证号：</label></div>
+	      <div class="weui-cell__bd">
+	        <input class="weui-input" id="idcard" type="text" name="username" value="">
+	        <!--<input class="weui-input" type="number" pattern="[0-9]*" value="weui input error" placeholder="请输入卡号">-->
+	      </div>
+	    </div>
+	    <div class="weui-cell">
+	      <div class="weui-cell__hd"><label for="" class="weui-label title">犬主姓名：</label></div>
+	      <div class="weui-cell__bd">
+	        <input class="weui-input" id="mastername" type="text" name="username" value="">
+	      </div>
+	    </div>
+	    <div class="weui-cell">
+	      <div class="weui-cell__hd"><label for="" class="weui-label title">犬主性别：</label></div>
+	      <div class="weui-cell__bd radio">
+					<label><input name="username" type="radio" value=""/>&nbsp;&nbsp;男</label>
+		      <label><input name="username" type="radio" value=""/>&nbsp;&nbsp;女</label>
+	      </div>
+	    </div>
+	    <div class="weui-cell">
+	      <div class="weui-cell__hd"><label for="" class="weui-label title">犬主民族：</label></div>
+	      <div class="weui-cell__bd">
+	        <input class="weui-input" type="text" name="username" value="" placeholder="请选择民族">
+	      </div>
+	    </div>
+			<div class="weui-cell last">
+	      <div class="weui-cell__hd"><label for="" class="weui-label title">联系电话：</label></div>
+	      <div class="weui-cell__bd">
+	        <input class="weui-input vali" id="tel" type="text" name="username" value="" maxlength="11"
+					onblur="validate(0,/^1[34578]\d{9}$/,'联系电话格式错误')">
+	      </div>
+	    </div>
+		</div>
+		<div class="page">
+			<div class="weui-cell">
+        <div class="weui-cell__hd"><label for="" class="weui-label">单位名称：</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input vali" id="enterprise" type="text" name="username" value=""
+					onblur="validate(1,/^(([\u4e00-\u9fff]{2,20})|([a-z\.\s\,\(\)（）]{2,20}))$/i,'单位名称格式错误')">
+          <!--<input class="weui-input" type="number" pattern="[0-9]*" value="weui input error" placeholder="请输入卡号">-->
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="" class="weui-label">法人身份证号码：</label></div>        <!-- 样式要改 -->
+        <div class="weui-cell__bd">
+          <input class="weui-input vali" id="idcard2" type="text" name="username" value=""
+					onblur="validate(2,/^\d{15}$|^\d{17}([0-9]|X)$/,'身份证号码格式错误')">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="" class="weui-label">法人姓名：</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input vali" id="legalername" type="text" name="username" value=""
+					onblur="validate(3,/^[\u4E00-\u9FA5]{2,4}$/,'姓名格式错误')">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="" class="weui-label" >责任人姓名：</label></div>          <!-- 样式要改 -->
+        <div class="weui-cell__bd">
+          <input class="weui-input vali" id="liablername" type="text" name="username" value=""
+					onblur="validate(4,/^[\u4E00-\u9FA5]{2,4}$/,'姓名格式错误')">
+        </div>
+      </div>
+  		<div class="weui-cell">
+        <div class="weui-cell__hd"><label for="" class="weui-label">责任人联系电话：</label></div>        <!-- 样式要改 -->
+        <div class="weui-cell__bd">
+          <input class="weui-input vali" id="tel2" type="text" name="username" value=""
+					onblur="validate(5,/^1[34578]\d{9}$/,'联系电话格式错误')">
+        </div>
+      </div>
+		</div>
+
+		<h4>地址：</h4>
+		<div class="weui-cell weui-cell_select weui-cell_select-after">
+			<div class="weui-cell__hd"><label for="name" class="weui-label">所在地区</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" id="start" type="text" value="四川省 成都市 高新区">
+			</div>
+		</div>
+		<div class="weui-cell weui-cell_select weui-cell_select-after">
+			<div class="weui-cell__hd">
+				<label for="" class="weui-label">街道：</label>
+			</div>
+			<div class="weui-cell__bd">
+				<select class="weui-select" id="area" name="select2">
+					<option value="" checked>选择</option>
+					<option value="1">中国</option>
+					<option value="2">美国</option>
+					<option value="3">英国</option>
+				</select>
+			</div>
+		</div>
+    <div class="weui-cells last" style="margin:0;height:75px;font-size:14px;">
+      <div class="weui-cell">
+          <textarea class="weui-textarea vali" id="textarea" placeholder="请填写详细地址，不少于5字" rows="3" style="text-indent:10px;"
+					onblur="validate(6,/^[\u4E00-\u9FA5]{1,}[\u4E00-\u9FA5a-z0-9A-Z]{4,}$/,'详细地址填写不规范')"
+          ></textarea>
+      </div>
+    </div>
+
+		<h4>照片上传：</h4>
+		<div class="weui-cell img_uploader last">
+  			<div class="weui-cell__bd clear s_pic">
+    			<div class="img_preview fl" >
+      				<span>犬主照片&nbsp;(要求：正面免冠彩色，确保清晰)</span>
+    			</div>
+    			<label class="file fr" id="myLabel">
+     				<input id="upBtn_s" type="file" name="imgUrlTemp" value="" accept="image/jpg,image/jpeg,image/png,image/bmp"/>
+    			</label>
+    			<div id="preview" style="text-indent:0;">
+      				<img class="imghead"  border=0 src="">
+    			</div>
+  			</div>
+		</div>
+		<div style="height:10px;background-color:#f2f2f2;"></div>			<!--  间隔style  -->
+		<div class="weui-cell img_uploader last">
+  			<div class="weui-cell__bd clear l_pic">
+    			<div class="img_preview fl">
+     				<span>请上传有效免疫证明图片（免疫证内页）</span>
+    			</div>
+    			<label class="file fr">
+      				<input id="upBtn_l" type="file" name="immuneUrl" accept="image/jpg,image/jpeg,image/png,image/bmp"/>
+    			</label>
+    			<div id="preview" style="text-indent:0;">
+      				<img class="imghead"  border=0 src="">
+   				</div>
+  			</div>
+		</div>
+  	</div>
+	<input class="submit next" id="submit" name="" type="button" value="下一步" />
+</form>
+</section>
+  <script src="../../../lib/jquery-2.1.4.js"></script>
+	<script src="../../../lib/fastclick.js"></script>
+  <script src="../../../js/jquery-weui.js"></script>
+	<script>
+		$(function() {
+			FastClick.attach(document.body);
+		});
+
+		//选项卡
+		var input=$(".type").children();
+		var div= $(".page");
+		input[0].onclick=function(){
+			for (var i = 0; i < div.length; i++) {
+				div[i].className='page';
+			}
+			div[0].className='page active';
+		};
+		input[1].onclick=function(){
+			for (var i = 0; i < div.length; i++) {
+				div[i].className='page';
+			}
+			div[1].className='page active';
+		}
+		
+		function getObjectURL(file) {
+			var url = null ;
+			if (window.createObjectURL!=undefined) { // basic
+				url = window.createObjectURL(file) ;
+			} else if (window.URL!=undefined) { // mozilla(firefox)
+				url = window.URL.createObjectURL(file) ;
+			} else if (window.webkitURL!=undefined) { // webkit or chrome
+				url = window.webkitURL.createObjectURL(file) ;
+			}
+			return url ;
+		}
+		
+			$("#upBtn_s").on("change",function(){
+				var objUrl = getObjectURL(this.files[0]) ; //获取图片的路径，该路径不是图片在本地的路径
+				//console.log(objUrl);
+				if (objUrl) {
+					$(".imghead:eq(0)").attr("src", "") ;	//先清空src
+					$(".imghead:eq(0)").attr("src", objUrl) ; //将图片路径存入src中，显示出图片
+					$.ajax({
+ 						type: "POST",
+			 			url: "wx/upload",
+				 		data:{"imgSrc":objUrl},
+				 		contentType: "application/json; charset=utf-8",
+				 		dataType:'json',
+						success:function(data){
+							//$("upBtn_s").attr("isFinished","t");
+				 		},
+					 	error:function(er){
+					 		//alert(er);
+						}
+					});
+				}
+				return false;
+			});
+		
+			$("#upBtn_l").on("change",function(){
+				var objUrl = getObjectURL(this.files[0]) ; //获取图片的路径，该路径不是图片在本地的路径
+				//console.log(objUrl);
+				if (objUrl) {
+					$(".imghead:eq(1)").attr("src", "") ;	//先清空src
+					$(".imghead:eq(1)").attr("src", objUrl) ; //将图片路径存入src中，显示出图片
+					$.ajax({
+ 						type: "POST",
+			 			url: "wx/upload",
+				 		data:{"imgSrc":objUrl},
+				 		contentType: "application/json; charset=utf-8",
+				 		dataType:'json',
+						success:function(data){
+							//$("upBtn_s").attr("isFinished","t");
+				 		},
+					 	error:function(er){
+					 		//alert(er);
+						}
+					});
+				}
+				return false;
+			});
+
+		//验证
+		function validate(i,k,prompt){
+			var re = new RegExp(k,'g');
+			var str=$('.vali').eq(i).val();
+			//console.log($("#"+obj));
+			if (!(re.test(str))) {
+					//El.style.color='red';
+					//El.value=prompt;
+					$.toptip(prompt,2000,'warning');
+					$(this).attr("isFinished","f");
+		 	}else {
+				$(this).attr("isFinished","t");
+		 	}
+			//console.log($("#"+obj).attr("a"));
+		}
+
+		// function recovery(obj,prompt){
+		// 	var El=document.getElementById(obj);
+		// 	if (El.value==prompt) {
+		// 		El.style.color='#333';
+		// 		El.value='';
+		// 	}
+		// }
+		// $("#area").change(function(){
+		// 	if ($(this).val()=="") {
+		// 		$.toptip('请选择地址信息',3000,'warning');
+		// 		$(this).attr("isFinished","f");
+		// 	}else {
+		// 		$(this).attr("isFinished","t");
+		// 	}
+		// });
+		$(".submit").click(function(){
+			for (var i = 0; i < $(".vali").length; i++) {
+				if($(".vali").eq(i).attr("isFinished")=="f"){
+					$.toptip('表单填写不完整',2000,'warning');
+					return false;
+				}else {
+					if ($("#area").val()) {
+						console.log(1);
+						$("#lform").submit();
+					}else {
+						$.toptip('请选择地址信息', 2000,'warning');
+						return false;
+					}
+				}
+			}
+		});
+
+		// $(".submit").click(function(){
+		// 	for(var i=0;i<$(".vali").length;i++){
+		// 		if($(".vali").eq(i).attr("isFinished")=="f"){
+		// 			$.toptip('表单填写不完整', 'warning');
+		// 			return false;
+		// 		}else {
+		// 			if ($("#area").val()) {
+		// 				$("#lform").submit();
+		// 			}else {
+		//
+		// 			}
+		// 		}
+		// 	}
+		// });
+		// $("#submit").click(function(){
+		// 	var arr=[];
+		// 	for(var i=0;i<$(".vali").length;i++){
+		// 		if($(".vali").eq(i).attr("isFinished")=="f"){
+		// 			$.toptip('表单输入不完整', 'warning');
+		// 			return false;
+		// 		}else {
+		// 			console.log(1);
+		// 			$("#lform").submit();
+		// 		}
+		// 	}
+		// });
+	</script>
+</body>
+</html>

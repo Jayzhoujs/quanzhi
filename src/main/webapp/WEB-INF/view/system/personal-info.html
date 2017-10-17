@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>欢迎登录蓉e犬后台管理系统</title>
+    
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+    <!-- bootstrap -->
+    <link href="../../css/dog_e/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="../../css/dog_e/bootstrap/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="../../css/dog_e/bootstrap/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
+
+    <!-- global styles -->
+    <link rel="stylesheet" type="text/css" href="../../css/dog_e/layout.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/dog_e/elements.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/dog_e/icons.css" />
+
+    <!-- libraries -->
+    <link rel="stylesheet" type="text/css" href="../../css/dog_e/lib/font-awesome.css" />
+    
+    <!-- this page specific styles -->
+    <link rel="stylesheet" href="../../css/dog_e/compiled/personal-info.css" type="text/css" media="screen" />
+
+    <!--    弹框-->
+   <link rel="stylesheet" href="../../css/sweetAlert/example.css">
+   <link rel="stylesheet" href="../../css/sweetAlert/sweet-alert.css">
+   
+   
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<body>
+
+    <!-- navbar -->
+    <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+            <a class="brand" href="index.html"><img src="../../img/logo.png" /></a>
+        </div>
+    </div>
+    <!-- end navbar -->
+      
+       <div id="sidebar-nav">
+        <ul id="dashboard-menu">
+            <li>
+                <a class="dropdown-toggle" href="#">
+                    <i class="icon-home"></i>
+                    <span>审批管理</span>
+                    <i class="icon-chevron-down"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="not-user-list.html">未审批</a></li>
+                    <li><a href="pass_list.html">已审批</a></li>
+                    <li><a href="not-pass-list.html">未通过记录</a></li>
+                    <li><a href="all-news-list.html">全部审核历史</a></li>
+                </ul>
+            </li>            
+            <li>
+                 <a class="dropdown-toggle" href="#">
+                    <i class="icon-th-large"></i>
+                    <span>犬只管理</span>
+                    <i class="icon-chevron-down"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="dog-user-list.html">犬种类</a></li>
+                    <li><a href="dog-skin-list.html">犬毛色</a></li>
+                    <li><a href="dog-forbid-list.html">禁养犬种</a></li>
+                    <li><a href="vaccine-list.html">疫苗网点</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="#">
+                    <i class="icon-group"></i>
+                    <span>组织架构</span>
+                    <i class="icon-chevron-down"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="area-list.html">地区</a></li>
+                    <li><a href="user-list.html">用户列表</a></li>
+                    <li><a href="new-user.html">新用户</a></li>
+                </ul>
+            </li>
+            <li>
+               <a class="dropdown-toggle" href="#">
+                    <i class="icon-picture"></i>
+                    <span>广告</span>
+                    <i class="icon-chevron-down"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="advertisement.html">查看已发布广告</a></li>
+                    <li><a href="form-wizard.html">新增广告</a></li>
+                </ul>
+            </li>
+            <li>
+               <a class="dropdown-toggle" href="#">
+                    <i class="icon-calendar-empty"></i>
+                    <span>资讯</span>
+                    <i class="icon-chevron-down"></i>
+                </a>
+                <ul class="submenu">
+                    <li><a href="infomation.html">查看已发布资讯</a></li>
+                    <li><a href="add-complain.html">新增资讯</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="count.html">
+                    <i class="icon-cog"></i>
+                    <span>统计</span>
+                </a>
+            </li>
+            <li>
+                <a href="personal-info.html">
+                    <i class="icon-cog"></i>
+                    <span>我的信息</span>
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="#">
+                    <i class="icon-share-alt"></i>
+                    <span>退出</span>
+                    <i class="icon-chevron-down"></i>
+                </a>
+                <ul class="submenu">
+
+                    <li><a href="signin.html">重新登录</a></li>
+                    <li><a href="signin.html">退出</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+      
+        <div class="content">
+            <div class="settings-wrapper" id="pad-wrapper">
+                <!-- edit form column -->
+                <div class="span7 personal-info">
+                    <h5 class="personal-title">个人信息展示</h5>
+
+                    <form action="" method="post">
+                        <div class="field-box">
+                            <label>姓名:</label>
+                            <input class="span5 inline-input" type="text" value="Galvan" />
+                        </div>
+                        <div class="field-box">
+                            <label>公司:</label>
+                            <select name="" id="" style='width: 456px;'>
+                                <option value="">11111</option>
+                                <option value="">11111</option>
+                                <option value="">11111</option>
+                                <option value="">11111</option>
+                                
+                            </select>
+                        </div>
+                        <div class="field-box">
+                            <label>邮箱:</label>
+                            <input class="span5 inline-input" type="text" value="alejandra@design.com" />
+                        </div>
+                        <div class="field-box">
+                            <label>使用名字:</label>
+                            <input class="span5 inline-input" type="text" value="alegalvan" />
+                        </div>
+                        <div class="field-box">
+                            <label>密码:</label>
+                            <input class="span5 inline-input" type="password" value="blablablabla" />
+                        </div>
+                        <div class="field-box">
+                            <label>确认密码:</label>
+                            <input class="span5 inline-input" type="password" value="blablablabla" />
+                        </div>
+                        <div class="span6 field-box actions">
+                            <input type="button" class="btn-glow primary" id="btn-glow" value="保存修改" />
+                            <span>OR</span>
+                            <input type="reset" value="放弃" class="reset" id='reset' />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+<!--        </div>-->
+<!--    </div>-->
+    <!-- end main container -->
+
+
+	<!-- scripts -->
+    <script src="../../js/dog_e/jquery-latest.js"></script>
+    <script src="../../js/dog_e/bootstrap.min.js"></script>
+    <script src="../../js/dog_e/theme.js"></script>
+    
+<!--    弹框-->
+    <script src='../../js/sweetAeler/sweet-alert.js'></script>
+    <script src='../../js/sweetAeler/sweet-alert.min.js'></script>    
+    <scpirt src='../../js/dog_e/jquery-1.8.3.min.js'></scpirt>
+    
+    
+    <script>
+        $(function (){
+            $('.btn-glow').on('click',function(){
+                     swal("OK!", "提交成功!", "success")
+                });
+            $('.reset').on('click',function(){
+                      swal({
+                      title: "你确定要放弃?",
+                      type: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#DD6B55",
+                      confirmButtonText: "Yes, 放弃它!",
+                      cancelButtonText: "No, 再想想!",
+                      closeOnConfirm: false
+                    },
+                    function(){
+                      swal("OK!", "该信息已经不存在.", "success");
+                    });
+                });
+        })
+    
+    </script>
+    
+    
+
+</body>
+</html>

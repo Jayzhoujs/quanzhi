@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 张煜 2017-09-06 9:42 添加本xml文档 -->
+<mapper namespace="com.xtoucher.dao.AccountDao">
+	<resultMap id="AccountMap" type="com.xtoucher.model.AccountModel">
+	</resultMap>
+	<!--查询警务所有信息 -->
+	<select id="queryList" resultMap="AccountMap">
+		select
+		id,account,head_img_url
+		as 'headImgUrl',user_name as 'userName',phone,branch_id as
+		'branchId',rank,is_available as 'isAvailable'
+		from e_account
+	</select>
+	<!--查询警务登录帐号 -->
+	<select id="queryLoad" resultType="com.xtoucher.model.AccountModel">
+		select id,account,
+		head_img_url as 'headImgUrl',
+		user_name as 'userName',
+		phone,
+		branch_id
+		as 'branchId',
+		rank,
+		is_available as 'isAvailable'
+		from e_account where
+		account=#{account} and pwd=#{pwd}
+	</select>
+	<!-- 根据帐号查询警务帐号 -->
+	<select id="queryAcc" resultType="String">
+		select account from e_account
+		where account=#{account }
+	</select>
+	<!-- 根据地区查询警务帐号信息 -->
+	<select id="queryAccount" resultType="com.xtoucher.model.AccountModel">
+		select
+		id,account,head_img_url as 'headImgUrl',user_name as
+		'userName',phone,branch_id as 'branchId',rank,is_available as
+		'isAvailable'
+		from e_account where branch_id=#{branchId}
+	</select>
+	<!-- 新增警务帐号信息 -->
+	<insert id="addPoliceUser" parameterType="com.xtoucher.model.AccountModel">
+		insert into e_account
+		set
+		account=#{account},pwd=#{pwd},head_img_url=#{headImgUrl},
+		user_name
+		=#{userName},phone=#{phone},branch_id=#{branchId},
+		rank=#{rank},is_available =#{isAvailable}
+	</insert>
+	<!-- 根据id查询警务帐号信息 -->
+	<select id="queryAccountUser" resultType="com.xtoucher.model.AccountModel">
+		select id,head_img_url
+		as 'headImgUrl',user_name as 'userName',phone,branch_id as
+		'branchId',rank,is_available as 'isAvailable',pwd,account
+		from
+		e_account where
+		id=#{id}
+	</select>
+	<!-- 根据id更新警务帐号禁用状态信息 -->
+	<update id="accountDisable" parameterType="com.xtoucher.model.AccountModel">
+		update e_account set
+		is_available=1 where id=#{id}
+	</update>
+	<!-- 根据id更新警务帐号禁用状态信息 -->
+	<update id="accountAllow" parameterType="com.xtoucher.model.AccountModel">
+		update e_account set
+		is_available=0 where id=#{id}
+	</update>
+	<!-- 根据帐号更新警务帐号信息 -->
+	<update id="updateCurrent" parameterType="com.xtoucher.model.AccountModel">
+		update e_account set
+		account=#{account},head_img_url=#{headImgUrl},
+		user_name=#{userName},phone=#{phone},branch_id=#{branchId}
+		where
+		id=#{id}
+	</update>
+	<!--根据登录帐号查询密码 -->
+	<select id="queryPwd" resultType="String">
+		select pwd from e_account where
+		account=#{account}
+	</select>
+	<!-- 根据帐号更新警务帐号密码 -->
+	<update id="updatePwd" parameterType="com.xtoucher.model.AccountModel">
+		update e_account set
+		pwd=#{password} where account=#{account}
+	</update>
+
+	<!-- 移动端修改密码 -->
+	<update id="update" parameterType="com.xtoucher.model.AccountModel">
+		update e_account set
+		pwd=#{pwd}
+		where id=#{id}
+	</update>
+
+
+	<resultMap id="AccountBranchMap" type="com.xtoucher.model.AccountBranchModel">
+	</resultMap>
+	<!-- 管理员查询所有账号列表 -->
+	<select id="getAccountListAll" resultMap="AccountBranchMap">
+		SELECT
+		a.id,
+		a.account,
+		a.user_name as 'userName',
+		a.rank,
+		a.pwd,
+		a.phone,
+		a.is_available as
+		'isAvailable',
+		b.name as 'branch',
+		a.create_time as
+		'createTime'
+		FROM
+		e_account a
+		left join e_branch b
+		on a.branch_id=b.id
+	</select>
+
+	<!-- 分巨和派出所领导查询自己网点下面的账号 -->
+	<select id="getAccountListByBranchId" resultMap="AccountBranchMap">
+		SELECT a.id,
+		a.account,
+		a.user_name as 'userName',
+		a.rank,
+		a.pwd,
+		a.phone,
+		a.is_available as 'isAvailable',
+		b.name as 'branch',
+		a.create_time as
+		'createTime'
+		FROM e_account a,e_branch b
+		WHERE a.branch_id=b.id
+		and
+		a.branch_id=#{0}
+	</select>
+	<!-- 管理员修改账号状态 -->
+	<update id="accountStatusChange" parameterType="String">
+		update e_account
+		set
+		is_available=#{1}
+		where id=#{0}
+	</update>
+
+	<!-- 其他角色修改账号状态 -->
+	<update id="accountStatusChange2" parameterType="String">
+		update e_account
+		set
+		is_available=#{1}
+		where id=#{0}
+		and branch_id=#{2}
+	</update>
+	<!-- 新增账号 -->
+	<insert id="addAccount" parameterType="com.xtoucher.model.AccountModel">
+		insert into e_account
+		set
+		account=#{account},
+		pwd=#{pwd},
+		user_name=#{userName},
+		phone=#{phone},
+		<if test="branchId != null and branchId != ''">
+			branch_id = #{branchId},
+		</if>
+		rank=#{rank},
+		is_available ='1',
+		create_time=now()
+	</insert>
+	<!-- 修改账号信息 -->
+	<update id="updateInfo" parameterType="com.xtoucher.model.AccountModel">
+		update e_account set
+		pwd=#{pwd},
+		user_name=#{userName},
+		phone=#{phone}
+		where
+		id=#{id}
+	</update>
+
+	<select id="isExit" resultType="int">
+		select count(*) from e_account
+		where account=#{0}
+	</select>
+</mapper>

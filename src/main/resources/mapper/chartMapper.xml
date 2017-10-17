@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xtoucher.dao.ChartDao">
+	<resultMap id="resultMap" type="com.xtoucher.model.ChartModel">
+	</resultMap>
+	<select id="queryAccount" resultMap="resultMap">
+		select
+		case a.rank
+		when 1 then
+		'管理员'
+		when 2 then '分局领导'
+		when 3 then '分局民警'
+		when 4 then '派出所领导'
+		when 5
+		then '派出所民警'
+		when 6 then '查询账号'
+		end as 'name',
+		count(*) as 'amount'
+		from
+		e_account a
+		group by a.rank
+		order by a.rank
+	</select>
+
+	<select id="queryApprovalList" resultMap="resultMap">
+		select a.name,count(*)
+		as 'amount' from (
+		select c.id,
+		date_format(c.create_time,'%Y-%m-%d') as
+		'name'
+		from e_approval c
+		where c.is_deleted != 1)a
+		group by a.name
+		limit 30
+	</select>
+
+	<select id="queryPassed" resultMap="resultMap">
+		select a.name,count(*) as
+		'amount' from (
+		select p.id,
+		date_format(h.handle_time ,'%Y-%m-%d') as
+		'name'
+		from e_approval p,e_approval_history h
+		where p.id=h.approval_id
+		and p.status=1
+		and p.is_deleted != 1)a
+		group by a.name
+		limit 30
+	</select>
+
+	<select id="queryNotPassed" resultMap="resultMap">
+		select a.name,count(*) as
+		'amount' from (
+		select p.id,
+		date_format(h.handle_time ,'%Y-%m-%d') as
+		'name'
+		from e_approval p,e_approval_history h
+		where p.id=h.approval_id
+		and p.status=2
+		and p.is_deleted != 1)a
+		group by a.name
+		limit 30
+	</select>
+
+	<select id="queryListByBranch" resultMap="resultMap">
+		select b.name,count(*)
+		as 'amount'
+		from e_approval p,e_approval_history h,e_account a,e_branch
+		b
+		where p.id=h.approval_id
+		and a.id=h.account_id
+		and b.id=a.branch_id
+		and
+		p.is_deleted != 1
+	</select>
+
+	<select id="masteDistribution" resultMap="resultMap">
+		select e.area as
+		'name',
+		count(*) as 'amount'
+		from e_user u,e_dog d,e_approval p,e_area e
+		where u.dog_id=d.id
+		and d.is_deleted != 1
+		and p.dog_id=d.id
+		and
+		e.id=u.area
+		group by e.area
+	</select>
+
+	<select id="queryDogAmount" resultMap="resultMap">
+		select name,count(*) as 'amount'
+		from
+		(select d.id,
+		date_format(h.handle_time,'%Y-%m-%d') as 'name'
+		from e_user u,e_dog d,e_approval a,e_approval_history h
+		where u.dog_id=d.id
+		and d.is_deleted != 1
+		and a.is_deleted !=1
+		and a.status = 1
+		and a.dog_id=d.id
+		and a.id=h.approval_id
+		)a
+		group by a.name
+		limit 30
+	</select>
+</mapper>
