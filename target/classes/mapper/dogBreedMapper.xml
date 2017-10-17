@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 张煜  2017-09-07 15:26 添加本Dogxml文档 -->
+<mapper namespace="com.xtoucher.dao.DogBreedDao">
+	<resultMap id="DogBreedMap" type="com.xtoucher.model.DogBreedModel">
+	</resultMap> 
+	<!--查询犬种 -->
+	<select id="queryDogBreed" resultMap="DogBreedMap">
+		select id,type from e_dog_breed
+	</select>
+	<update id="updateDogBreed" parameterType="com.xtoucher.model.DogBreedModel">
+		update e_dog_breed set type=#{type} where id=#{id}	
+	</update>	
+	<delete id="deleteDogBreed" parameterType="com.xtoucher.model.DogBreedModel">
+		delete from e_dog_breed where id=#{id}
+	</delete>
+	<insert id="saveDogBreed"  parameterType="com.xtoucher.model.DogBreedModel">
+		insert into  e_dog_breed set type=#{type}
+	</insert>
+</mapper>

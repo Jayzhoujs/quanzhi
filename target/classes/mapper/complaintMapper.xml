@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xtoucher.dao.ComplaintDao">
+	<resultMap id="complaintMap" type="com.xtoucher.model.ComplaintModel">
+	</resultMap>
+	<!--查询投诉 -->
+	<select id="getComplaintList" resultMap="complaintMap">
+		select
+		id,
+		address,
+		detail,
+		img_url as 'imgUrl',
+		user_id as 'userId',
+		create_time as
+		'createTime',
+		is_open as 'isOpen',
+		longitude,
+		latitude
+		from
+		e_complaint
+		where is_open='1'
+		order by create_time desc
+		limit #{0},12
+	</select>
+	
+	<!-- 提交投诉信息 -->
+	<insert id="complaintCommit" parameterType="com.xtoucher.model.ComplaintModel">
+		insert into e_complaint
+		(address,
+		detail,
+		img_url,
+		user_id,
+		creat_time,
+		is_open,
+		longitude,
+		latitude)
+		values
+		(#{address},
+		#{detail},
+		#{imgUrl},
+		#{userId},
+		#{createTime},
+		#{isOpen},
+		#{longitude},
+		#{latitude)
+	</insert>
+	<!-- 公开投诉 -->
+	<update id="openComplaint" parameterType="com.xtoucher.model.ComplaintModel">
+		UPDATE e_complaint SET is_open=1 where id=#{id}
+	</update> 
+</mapper>

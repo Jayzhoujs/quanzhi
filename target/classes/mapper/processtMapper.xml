@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xtoucher.dao.ProcessDao">
+	<!--查询详情 -->
+	<select id="process" resultType="com.xtoucher.model.ProcessModel">
+		select * from e_process
+		limit 1
+	</select>
+	
+	<update id="updateProcess" parameterType="com.xtoucher.model.ProcessModel">
+		update e_process set detail=#{detail}
+	</update>
+	
+</mapper>

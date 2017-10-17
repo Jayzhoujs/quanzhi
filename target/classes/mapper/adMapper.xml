@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xtoucher.dao.AdDao">
+	<resultMap id="adMap" type="com.xtoucher.model.AdModel">
+	</resultMap>
+	<!--查询广告 -->
+	<select id="getList" resultMap="adMap">
+		select id,url,img_url as 'imgUrl',create_time as 'createTime',title from e_ad order
+		by create_time desc
+	</select>
+	<!--查询广告 -->
+	<select id="queryAd" resultType="com.xtoucher.model.AdModel" parameterType="String">
+		select id,url,img_url as 'imgUrl',create_time as 'createTime',title from e_ad
+			where id=#{0}
+	</select>
+	<!-- 添加新广告 -->
+	<insert id="addAd"  parameterType="com.xtoucher.model.AdModel">
+		insert into  e_ad set 
+		url=#{url},img_url =#{imgUrl},create_time =#{createTime},title=#{title}
+	</insert>
+	<!-- 删除广告 -->
+	<delete id="deleteAd" parameterType="com.xtoucher.model.AdModel">
+		delete from  e_ad where id=#{id}
+	</delete>
+	<!-- 更新广告 -->
+	<update id="updateAd" parameterType="com.xtoucher.model.AdModel">
+		update e_ad set 
+		url=#{url},img_url=#{imgUrl},create_time=#{createTime},title=#{title}where id=#{id}	
+	</update>
+</mapper>
+

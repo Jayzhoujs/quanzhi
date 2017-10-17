@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xtoucher.dao.UserDao">
+
+	<sql id="Column_List">
+		open_id as 'openId',
+		real_name as 'realName',
+		head_img_url as
+		'headImgUrl',
+		nick_name as 'nickName',
+		phone_num as 'phoneNum',
+		idcard_num as 'idcardNum',
+		gender as 'gender',
+		nation as 'nation',
+		area
+		as 'area',
+		street as 'street',
+		address as 'address',
+		face_img_url as
+		'faceImgUrl',
+		idcard_img_url as 'idcardImgUrl',
+		create_time as
+		'createTime',
+		dog_id as 'dogId',
+		company_name as 'companyName',
+		contact_name as 'contactName',
+		contact_phone as 'contactPhone',
+		is_authenticated as 'isAuthenticated',
+		user_id as 'userId',
+		id
+	</sql>
+	<!--查询用户信息 -->
+	<select id="getUserInfo" resultType="com.xtoucher.model.UserModel">
+		select
+		<include refid="Column_List" />
+		from e_user
+		<where>
+			<if test="id != null">and id=#{id}</if>
+			<if test="idcardNum != null">and idcard_num=#{idcardNum}</if>
+			<if test="userId != null">and user_id=#{userId}</if>
+		</where>
+	</select>
+
+	<!--判断用户是否提交过审核 -->
+	<select id="isApprovalded" resultType="int" parameterType="String">
+		select count(*) from e_approval
+		where user_id=#{0} and is_deleted!='1'
+	</select>
+
+	<update id="userInfoUpload" parameterType="com.xtoucher.model.UserModel">
+		update e_user
+		<set>
+			phone_num = #{phoneNum} ,
+			area = #{area},
+			street = #{street},
+			address=#{address},
+			<if test="contactName != null">
+				contact_name = #{contactName},
+			</if>
+			<if test="companyName != null">
+				company_name = #{companyName},
+			</if>
+			<if test="contactPhone != null">
+				contact_phone = #{contactPhone},
+			</if>
+			<if test="dogId != null">
+				dog_id = #{dogId},
+			</if>
+		</set>
+		where user_id = #{userId}
+	</update>
+	<!--查询所有用户信息 -->
+	<select id="queryUser" resultType="com.xtoucher.model.UserModel">
+		select
+		<include refid="Column_List" />
+		from e_user
+	</select>
+	<!--id查询用户信息 -->
+	<select id="queryUserDetailed" resultType="com.xtoucher.model.UserModel">
+		select
+		<include refid="Column_List" />
+		from e_user where id=#{id }
+	</select>
+
+	<!--身份证号查询用户是否已经申报过犬证 -->
+	<select id="userInfoCheck" resultType="int">
+		select count(*) from
+		e_user u ,e_approval p
+		where u.id=p.user_id
+		and p.is_deleted != '1'
+		and
+		u.idcard_num=#{0}
+		and p.status != '2'
+	</select>
+
+
+	<insert id="saveUserInfo" parameterType="com.xtoucher.model.UserModel"
+		keyProperty="id" useGeneratedKeys="true">
+		insert into e_user
+		(real_name,
+		idcard_num,
+		gender,
+		nation,
+		idcard_img_url,
+		user_id,
+		phone_num,
+		create_time)
+		values
+		(#{realName},
+		#{idcardNum},
+		#{gender},
+		#{nation},
+		#{idcardImgUrl},
+		#{userId},
+		#{phoneNum},
+		now())
+	</insert>
+
+	
+	
+	
+	
+	<!--根据单位所在地方查找分局网点 -->
+	<select id="isExist" resultType="int" parameterType="com.xtoucher.model.UserModel">
+		select count(*) from e_user where idcard_num=#{idcardNum}
+	</select>
+	
+	
+
+</mapper>
+

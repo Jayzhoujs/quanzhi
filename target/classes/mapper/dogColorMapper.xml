@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 张煜 2017-09-07 15:26 添加本Dogxml文档 -->
+<mapper namespace="com.xtoucher.dao.DogColorDao">
+	<resultMap id="DogColorMap" type="com.xtoucher.model.DogColorModel">
+	</resultMap>
+	<!--查询犬种 -->
+	<select id="queryDogColor" resultMap="DogColorMap">
+		select id,color from
+		e_dog_color
+	</select>
+	<!-- 更新犬种 -->
+	<update id="updateDogColor" parameterType="com.xtoucher.model.DogColorModel">
+		update e_dog_color set
+		color=#{color} where id=#{id}
+	</update>
+	<!-- 删除犬种 -->
+	<delete id="deleteDogColor" parameterType="com.xtoucher.model.DogColorModel">
+		delete from
+		e_dog_color where id=#{id}
+	</delete>
+	<!-- 添加犬种 -->
+	<insert id="saveDogColor" parameterType="com.xtoucher.model.DogColorModel">
+		insert into e_dog_color
+		set color=#{color}
+	</insert>
+
+	
+
+</mapper>

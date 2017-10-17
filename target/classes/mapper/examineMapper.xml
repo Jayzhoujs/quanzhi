@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.xtoucher.dao.ExamineDao">
+	<resultMap id="ExamineMap" type="com.xtoucher.model.ExamineModel">
+	</resultMap>
+
+
+	<sql id="Appr_List">
+		a.id,
+		a.user_id as 'userId',
+		a.dog_id as 'dogId',
+		a.branch_id
+		as 'branchId',
+		a.create_time as 'createTime',
+		a.status,
+		a.is_deleted as
+		'isDeleted',
+	</sql>
+
+	<sql id="User_List">
+		u.open_id as 'openId',
+		u.real_name as 'realName',
+		u.head_img_url as 'headImgUrl',
+		u.nick_name as 'nickName',
+		u.phone_num
+		as 'phoneNum',
+		u.idcard_num as 'idcardNum',
+		u.gender as 'gender',
+		u.nation as 'nation',
+		u.area as 'area',
+		u.street as 'street',
+		u.address
+		as 'address',
+		u.face_img_url as 'faceImgUrl',
+		u.idcard_img_url as
+		'idcardImgUrl',
+		u.create_time as 'uCreateTime',
+		u.company_name as
+		'companyName',
+		u.contact_name as 'contactName',
+		u.contact_phone as
+		'contactPhone',
+		u.is_authenticated as 'isAuthenticated',
+	</sql>
+	<sql id="Dog_List">
+		d.dog_name as 'dogName',
+		d.varieties,
+		d.gender as 'dGender',
+		d.color,
+		d.registration_num as 'registrationNum',
+		d.registration_time
+		as'registrationTime',
+		d.img_url as 'imgUrl',
+		d.remark,
+		d.date_of_birth as
+		'dateOfBirth',
+		d.immune_num as 'immuneNum',
+		d.is_sterilized as
+		'isSterilized',
+		d.uses,
+		d.is_forbidden as 'isForbidden',
+		d.img_url as
+		'imgUrl',
+		d.immune_url as 'immuneUrl',
+		d.editable,
+		d.create_time as
+		'dCreateTime',
+		d.update_time as 'updateTime',
+		d.log_off_time as
+		'logOffTime',
+		d.log_off_reason as
+		'logOffReason',
+	</sql>
+	<sql id="Branch_List">
+		b.name,
+		b.parent_id as 'parentId'
+	</sql>
+	<!-- 查询所有审核的单据,不包括未审核 -->
+	<select id="queryList" resultMap="ExamineMap">
+		select
+
+		<include refid="Appr_List" />
+		<include refid="User_List" />
+		<include refid="Dog_List" />
+		<include refid="Branch_List" />
+
+		from
+		e_approval a,e_user u,e_dog d,e_branch b
+		where a.user_id=u.id and
+		a.branch_id=b.id and a.dog_id=d.id and a.status>0 and a.id limit
+		${0},10
+	</select>
+	<!-- 根据id查询单个信息 -->
+	<select id="queryExamine" resultMap="ExamineMap">
+		select
+
+		<include refid="Appr_List" />
+		<include refid="User_List" />
+		<include refid="Dog_List" />
+		<include refid="Branch_List" />
+
+		from
+		e_approval a,e_user u,e_dog d,e_branch b
+		where a.user_id=u.id and
+		a.branch_id=b.id and a.dog_id=d.id and a.id=#{id}
+	</select>
+	<!-- 根据状态查询信息 -->
+	<select id="queryStatus" resultMap="ExamineMap">
+		select
+
+		<include refid="Appr_List" />
+		<include refid="User_List" />
+		<include refid="Dog_List" />
+		<include refid="Branch_List" />
+
+		from
+		e_approval a,e_user u,e_dog d,e_branch b
+		where a.user_id=u.id and
+		a.branch_id=b.id and a.dog_id=d.id and a.status=#{status}
+	</select>
+	<!-- 根据状态查询信息 -->
+	<select id="queryStatusA" resultMap="ExamineMap">
+		select
+
+		<include refid="Appr_List" />
+		<include refid="User_List" />
+		<include refid="Dog_List" />
+		<include refid="Branch_List" />
+
+		from
+		e_approval a,e_user u,e_dog d,e_branch b
+		where a.user_id=u.id and
+		a.branch_id=b.id and a.dog_id=d.id and a.status >= #{status}
+	</select>
+	<!-- 查询状态为0，地区id的信息 -->
+	<select id="listExaminBranch" resultMap="ExamineMap">
+		select
+
+		<include refid="Appr_List" />
+		<include refid="User_List" />
+		<include refid="Dog_List" />
+		<include refid="Branch_List" />
+
+		from
+		e_approval a,e_user u,e_dog d,e_branch b
+		where a.user_id=u.id and
+		a.branch_id=b.id and a.dog_id=d.id
+		and a.status = 0 and
+		b.id=#{branchId}
+	</select>
+	<!-- 查询状态为12，地区id的信息 -->
+	<select id="listExaminBranchAll" resultMap="ExamineMap">
+		select
+
+		<include refid="Appr_List" />
+		<include refid="User_List" />
+		<include refid="Dog_List" />
+		<include refid="Branch_List" />
+
+		from
+		e_approval a,e_user u,e_dog d,e_branch b
+		where a.user_id=u.id and
+		a.branch_id=b.id and a.dog_id=d.id
+		and a.status>0 and b.id=#{branchId}
+	</select>
+	<!-- 查询所有状态为0 -->
+	<select id="listExBranchAll" resultMap="ExamineMap">
+		select
+
+		<include refid="Appr_List" />
+		<include refid="User_List" />
+		<include refid="Dog_List" />
+		<include refid="Branch_List" />
+
+		from
+		e_approval a,e_user u,e_dog d,e_branch b
+		where a.user_id=u.id and
+		a.branch_id=b.id and a.dog_id=d.id
+		and a.status = 0
+	</select>
+	<!-- 根据状态查询信息 -->
+	<select id="queryStatusBranch" resultMap="ExamineMap">
+		select
+
+		<include refid="Appr_List" />
+		<include refid="User_List" />
+		<include refid="Dog_List" />
+		<include refid="Branch_List" />
+
+		from
+		e_approval a,e_user u,e_dog d,e_branch b
+		where a.user_id=u.id and
+		a.branch_id=b.id and a.dog_id=d.id
+		and a.status=#{status} and
+		b.id=#{branchId}
+	</select>
+	<!-- 根据状态查询信息 -->
+	<select id="queryStatusABranch" resultMap="ExamineMap">
+		select
+
+		<include refid="Appr_List" />
+		<include refid="User_List" />
+		<include refid="Dog_List" />
+		<include refid="Branch_List" />
+
+		from
+		e_approval a,e_user u,e_dog d,e_branch b
+		where a.user_id=u.id and
+		a.branch_id=b.id and a.dog_id=d.id and a.status >= #{status}
+		and
+		b.id=#{branchId}
+	</select>
+
+
+
+	<resultMap id="approMap" type="com.xtoucher.model.ApproModel">
+	</resultMap>
+	<!-- 查询所有 -->
+	<select id="getListAll" resultMap="approMap">
+		select a.id ,
+		u.real_name as
+		'realName',
+		u.phone_num as 'phoneNum',
+		d.dog_name as 'dogName',
+		d.varieties,
+		a1.area as 'area',
+		a2.area as 'street',
+		d.color,
+		a.create_time as 'createTime',
+		a.status
+		from e_dog d,e_approval a,e_user
+		u
+		left join e_area a1 on a1.id=u.area and a1.parent_id is null
+		left join
+		e_area a2 on a2.id=u.street and a2.parent_id is not null
+		where
+		u.dog_id=d.id
+		and a.dog_id=d.id
+		and a.is_deleted != 1
+	</select>
+
+	<!-- 查询非管理员权限 -->
+	<select id="getListByBranchId" resultMap="approMap">
+		select a.id ,
+		u.real_name as 'realName',
+		u.phone_num as 'phoneNum',
+		d.dog_name as
+		'dogName',
+		d.varieties,
+		a1.area as 'area',
+		a2.area as 'street',
+		d.color,
+		a.create_time as 'createTime',
+		a.status
+		from e_dog d,e_approval a,e_user
+		u
+		left join e_area a1 on a1.id=u.area and a1.parent_id is null
+		left join
+		e_area a2 on a2.id=u.street and a2.parent_id is not null
+		where
+		u.dog_id=d.id
+		and a.dog_id=d.id
+		and a.is_deleted != 1
+		and
+		a.branch_id=#{0}
+	</select>
+
+	<!-- 查看申报详情 -->
+	<select id="approvalDetail" resultType="com.xtoucher.model.ApproModel">
+		select a.id ,
+		u.real_name
+		as
+		'realName',
+		u.phone_num as 'phoneNum',
+		d.dog_name as 'dogName',
+		d.varieties,
+		a1.area as 'area',
+		a2.area as 'street',
+		d.color,
+		a.create_time as 'createTime',
+		a.status,
+		u.gender,
+		u.nation,
+		u.address,
+		d.gender as 'dogGender',
+		d.date_of_birth as 'dogBirth',
+		d.immune_num as
+		'immuneNum',
+		d.is_sterilized as 'isSterilized',
+		d.uses,
+		d.is_forbidden as
+		'isForbidden',
+		d.img_url as 'imgUrl',
+		d.registration_num as
+		'registrationNum'
+
+		from e_dog d,e_approval a,e_user u
+		left join e_area a1
+		on a1.id=u.area and
+		a1.parent_id is null
+		left join
+		e_area a2 on
+		a2.id=u.street and
+		a2.parent_id is not null
+		where
+		u.dog_id=d.id
+		and
+		a.dog_id=d.id
+		and
+		a.is_deleted != 1
+		and a.id=#{1}
+	</select>
+
+	<!-- 查看申报详情,非管理员角色 -->
+	<select id="approvalDetail2" resultType="com.xtoucher.model.ApproModel">
+		select a.id ,
+		u.real_name
+		as
+		'realName',
+		u.phone_num as 'phoneNum',
+		d.dog_name as
+		'dogName',
+		d.varieties,
+		a1.area as 'area',
+		a2.area as 'street',
+		d.color,
+		a.create_time as 'createTime',
+		a.status,
+		u.gender,
+		u.nation,
+		u.address,
+		d.gender as 'dogGender',
+		d.date_of_birth as 'dogBirth',
+		d.immune_num as
+		'immuneNum',
+		d.is_sterilized as 'isSterilized',
+		d.uses,
+		d.is_forbidden as
+		'isForbidden',
+		d.img_url as 'imgUrl',
+		d.registration_num as
+		'registrationNum'
+
+		from e_dog d,e_approval a,e_user u
+		left join e_area a1
+		on a1.id=u.area and
+		a1.parent_id is null
+		left join
+		e_area a2 on
+		a2.id=u.street and
+		a2.parent_id is not null
+		where
+		u.dog_id=d.id
+		and
+		a.dog_id=d.id
+		and
+		a.is_deleted != 1
+		and a.branch_id=#{0}
+		and a.id=#{1}
+	</select>
+
+	<!-- 查看申报记录，管理员 -->
+	<select id="approvalHistory" resultType="com.xtoucher.model.HistoryModel">
+		select
+		h.id,
+		a.status,
+		a.create_time as 'createTime',
+		h.remark,
+		h.handle_time as 'handleTime',
+		b.name as 'branchName',
+		e.user_name as 'userName',
+		e.account,
+		e.phone
+		from e_approval a,e_approval_history h,e_account e,e_branch b
+		where
+		a.id=h.approval_id
+		and h.account_id=e.id
+		and b.id=e.branch_id
+		and a.id=#{0}
+	</select>
+	
+	<!-- 查看申报记录，非管理员 -->
+	<select id="approvalHistory2" resultType="com.xtoucher.model.HistoryModel">
+		select
+		h.id,
+		a.status,
+		a.create_time as 'createTime',
+		h.remark,
+		h.handle_time as 'handleTime',
+		b.name as 'branchName',
+		e.user_name as 'userName',
+		e.account,
+		e.phone
+		from e_approval a,e_approval_history h,e_account e,e_branch b
+		where
+		a.id=h.approval_id
+		and h.account_id=e.id
+		and b.id=e.branch_id
+		and a.id=#{1}
+		and a.branch_id=#{0}
+	</select>
+
+
+</mapper>

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 张煜 2017-09-07 15:26 添加本Dogxml文档 -->
+<mapper namespace="com.xtoucher.dao.DogDao">
+	<resultMap id="DogMap" type="com.xtoucher.model.DogModel">
+	</resultMap>
+	<sql id="Dog_List">
+		d.dog_name 		as 'dogName',
+		d.varieties,
+		d.gender 		as 'dGender',
+		d.color,
+		d.registration_num 	as 'registrationNum',
+		d.registration_time as'registrationTime',
+		d.img_url 		as 'imgUrl',
+		d.remark,
+		d.date_of_birth as 'dateOfBirth',
+		d.immune_num 	as 'immuneNum',
+		d.is_sterilized as  'isSterilized',
+		d.uses,
+		d.is_forbidden  as 'isForbidden',
+ 		d.img_url 		as 'imgUrl',
+ 		d.immune_url 	as 'immuneUrl',
+ 		d.editable,
+ 		d.create_time 	as 'dCreateTime',
+ 		d.update_time	as	'updateTime',
+		d.log_off_time	as	'logOffTime',
+		d.log_off_reason  as 'logOffReason'
+	</sql>
+	<!--根据id查询犬只所有信息 -->
+	<select id="queryDog" resultMap="DogMap">
+		select  	
+		<include refid="Dog_List" />			
+		from 
+		e_dog d
+		where id=#{id}
+	</select>
+	<!-- 保存犬只信息 -->
+	<insert id="saveInfo" parameterType="com.xtoucher.model.DogModel"
+		keyProperty="id" useGeneratedKeys="true">
+		insert into e_dog
+		(dog_name,
+		varieties,
+		gender,
+		date_of_birth,
+		color,
+		immune_num,
+		is_sterilized,
+		uses,
+		is_forbidden,
+		img_url,
+		immune_url,
+		editable,
+		registration_num,
+		create_time,
+		is_deleted)
+		values
+		(#{dogName},
+		#{varieties},
+		#{gender},
+		#{dateOfBirth},
+		#{color},
+		#{immuneNum},
+		#{isSterilized},
+		#{uses},
+		#{isForbidden},
+		#{imgUrl},
+		#{immuneUrl},
+		#{editable},
+		#{registrationNum},
+		now(),
+		'0')
+	</insert>
+
+	<!-- 更新犬只信息 -->
+	<update id="update" parameterType="com.xtoucher.model.DogModel">
+		update
+		e_dog
+		<set>
+			update_time=now(),
+			<if test="registrationNum != null">
+				registration_num = #{registrationNum},
+			</if>
+
+			<if test="registrationTime != null">
+				registration_time = #{registrationTime},
+			</if>
+		</set>
+		where id =#{id}
+	</update>
+
+	<!--查询犬证信息 -->
+	<select id="getDogInfoByKeyWord" resultType="com.xtoucher.model.DogModel">
+		select
+		d.dog_name as
+		'dogName',
+		d.varieties,
+		d.color,
+		d.gender,
+		d.registration_num as
+		'registrationNum',
+		d.registration_time as'registrationTime',
+		d.img_url
+		as 'imgUrl',
+		d.id,
+		d.remark
+		from e_user u,e_dog d
+		where
+		u.dog_id=d.id
+		and
+		d.is_deleted != '1'
+		and u.idcard_num=#{0}
+		and d.registration_num=#{1}
+		limit 1
+
+	</select>
+
+
+	<update id="logOff" parameterType="String">
+		update e_user u,e_dog d
+		set
+		d.log_off_reason=#{3},is_deleted='1',log_off_time=now()
+		where
+		u.dog_id=d.id
+		and u.idcard_num=#{0}
+		and d.registration_num=#{1}
+		and
+		d.id=#{2}
+	</update>
+	
+	<!--移动端审批相关的完整MoedlMap -->
+	<resultMap id="PoliceApprovalMap" type="com.xtoucher.model.PoliceApprovalModel">
+	</resultMap>
+
+	<!-- -->
+	<select id="getApprovalList" resultMap="PoliceApprovalMap">
+		select p.id,
+		p.status,
+		u.real_name as 'realName',
+		u.idcard_num as 'IDNum',
+		u.gender as 'masterGender',
+		u.nation,
+		u.phone_num as 'phone',
+		u.area,
+		u.street,
+		u.address,
+		d.dog_name as 'dogName',
+		d.varieties,
+		d.gender as 'dogGender',
+		d.date_of_birth as 'dogBirth',
+		d.color,
+		d.immune_num as 'immuneNum',
+		d.is_sterilized as 'isSterilized',
+		d.uses,
+		d.is_forbidden as 'isForbidden',
+		d.img_url as 'imgUrl',
+		d.immune_url as 'immuneUrl',
+		d.create_time as 'createTime'
+		from e_user u,e_dog d,e_approval p
+		where u.dog_id=d.id
+		and p.dog_id=d.id
+		and p.is_deleted !='1'
+		and p.branch_id=#{0}
+		and p.status=0
+		order by d.create_time asc limit 20
+	</select>
+	
+	<!-- 未审核，关键字搜索 -->
+	<select id="toApprovalSearch" resultMap="PoliceApprovalMap">
+		select p.id,
+		p.status,
+		u.real_name as 'realName',
+		u.idcard_num as 'IDNum',
+		u.gender as 'masterGender',
+		u.nation,
+		u.phone_num as 'phone',
+		u.area,
+		u.street,
+		u.address,
+		d.dog_name as 'dogName',
+		d.varieties,
+		d.gender as 'dogGender',
+		d.date_of_birth as 'dogBirth',
+		d.color,
+		d.immune_num as 'immuneNum',
+		d.is_sterilized as 'isSterilized',
+		d.uses,
+		d.is_forbidden as 'isForbidden',
+		d.img_url as 'imgUrl',
+		d.immune_url as 'immuneUrl',
+		d.create_time as 'createTime'
+		from e_user u,e_dog d,e_approval p
+		where u.dog_id=d.id
+		and p.dog_id=d.id
+		and p.is_deleted !='1'
+		and p.branch_id=#{0}
+		and p.status=0
+		and (u.idcard_num=#{1} or u.real_name=#{2})
+		order by d.create_time asc
+	</select>
+	
+	<!-- 已审核，关键字搜索 -->
+	<select id="approvaledSearch" resultMap="PoliceApprovalMap">
+		select p.id,
+		p.status,
+		u.real_name as 'realName',
+		u.idcard_num as 'IDNum',
+		u.gender as 'masterGender',
+		u.nation,
+		u.phone_num as 'phone',
+		u.area,
+		u.street,
+		u.address,
+		d.dog_name as 'dogName',
+		d.varieties,
+		d.gender as 'dogGender',
+		d.date_of_birth as 'dogBirth',
+		d.color,
+		d.immune_num as 'immuneNum',
+		d.is_sterilized as 'isSterilized',
+		d.uses,
+		d.is_forbidden as 'isForbidden',
+		d.img_url as 'imgUrl',
+		d.immune_url as 'immuneUrl',
+		d.create_time as 'createTime'
+		from e_user u,e_dog d,e_approval p
+		where u.dog_id=d.id
+		and p.dog_id=d.id
+		and p.is_deleted !='1'
+		and p.branch_id=#{0}
+		and p.status != '0'
+		and (u.idcard_num=#{1} or u.real_name=#{2})
+		order by d.create_time asc
+	</select>
+	
+	<!-- 根据id查询-->
+	<select id="getApprovalById" resultType="com.xtoucher.model.PoliceApprovalModel">
+		select p.id,
+		p.status,
+		u.real_name as 'realName',
+		u.idcard_num as 'IDNum',
+		u.gender as 'masterGender',
+		u.nation,
+		u.phone_num as 'phone',
+		e.area,
+		e2.area as 'street',
+		u.address,
+		d.dog_name as 'dogName',
+		d.varieties,
+		d.gender as 'dogGender',
+		d.date_of_birth as 'dogBirth',
+		d.color,
+		d.immune_num as 'immuneNum',
+		d.is_sterilized as 'isSterilized',
+		d.uses,
+		d.is_forbidden as 'isForbidden',
+		d.img_url as 'imgUrl',
+		d.immune_url as 'immuneUrl',
+		d.create_time as 'createTime'
+		from e_dog d,e_approval p,e_user u
+		left join e_area e
+		on e.id=u.area
+		left join e_area e2 
+		on e2.id=u.street 
+		where u.dog_id=d.id
+		and p.dog_id=d.id
+		and p.is_deleted !='1'
+		and p.branch_id=#{0}
+		and p.status = 0
+		and p.id=#{1}
+		
+	</select>
+	
+	<!-- 审核 -->
+	<update id="approval" parameterType="String">
+		update
+		e_approval
+		<set>
+			status=#{1}
+		</set>
+		where id =#{0} and status=0
+	</update>
+	
+	<!-- 保存审核信息 -->
+	<insert id="saveHistory" parameterType="com.xtoucher.model.ProgressHistoryModel">
+		insert into e_approval_history
+		(approval_id,
+		account_id,
+		handle_time,
+		remark)
+		values
+		(#{approvalId},
+		#{accountId},
+		now(),
+		#{remark})
+	</insert>
+	
+	<!--Polcieduan查询犬证信息 -->
+	<select id="getDogInfoByKeyWord2" resultType="com.xtoucher.model.DogModel">
+		select
+		d.dog_name as
+		'dogName',
+		d.varieties,
+		d.color,
+		d.gender,
+		d.registration_num as
+		'registrationNum',
+		d.registration_time as'registrationTime',
+		d.img_url
+		as 'imgUrl',
+		d.id,
+		d.remark
+		from e_user u,e_dog d
+		where
+		u.dog_id=d.id
+		and
+		d.is_deleted != '1'
+		and (u.idcard_num=#{0} or d.registration_num=#{1})
+
+	</select>
+</mapper>

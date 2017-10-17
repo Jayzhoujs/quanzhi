@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xtoucher.dao.HospitalDao">
+	<resultMap id="hospitalMap" type="com.xtoucher.model.HospitalModel">
+	</resultMap>
+	<!--查询 -->
+	<select id="getList" resultMap="hospitalMap">
+		select
+		id,area,name,address,contact_phone as 'contactPhone',top_time as
+		'topTime' from e_hospital
+		order by top_time desc
+	</select>
+
+	<!--搜索 -->
+	<select id="getListByKeyword" resultMap="hospitalMap">
+		select
+		id,area,name,address,contact_phone as 'contactPhone',top_time as
+		'topTime' from e_hospital
+		where name like CONCAT('%',#{0},'%') or area
+		like CONCAT('%',#{1},'%')
+		order by top_time desc
+	</select>
+	
+	<!--详情 -->
+	<select id="getInfoById" resultType="com.xtoucher.model.HospitalModel">
+		select
+		id,area,name,address,contact_phone as 'contactPhone',top_time as
+		'topTime' from e_hospital
+		where id=#{0}
+	</select>
+	<!-- 更新 -->
+	<update id="updateHospital"  parameterType="com.xtoucher.model.HospitalModel">
+		update e_hospital set
+		area=#{area},name=#{name},address=#{address},
+		contact_phone=#{contactPhone},top_time=#{topTime}
+		where id=#{id}
+	</update>
+	<!-- 删除-->
+	<delete id="deleteHospital" parameterType="com.xtoucher.model.HospitalModel">
+		delete from
+		e_hospital where id=#{id}
+	</delete>
+	<!-- 添加 -->
+	<insert id="addHospital" parameterType="com.xtoucher.model.HospitalModel">
+		insert into e_hospital
+		set area=#{area},name=#{name},address=#{address},
+		contact_phone =#{contactPhone},top_time =#{topTime}
+	</insert>
+</mapper>
+

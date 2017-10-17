@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xtoucher.dao.ApprovalHistoryDao">
+	<resultMap id="apphMap" type="com.xtoucher.model.ApprovalHistoryModel">
+	</resultMap>
+	<!--查询广告 -->
+	<select id="queryApprovalH" resultMap="apphMap">
+		select 
+		id, approval_id as 'approvalId',account_id as 'accountId',handle_time as'handleTime',remark 
+		from e_approval_history where approval_id=#{id}
+	</select>
+	<!-- 添加审批历史 -->
+	<insert id="addApprovalH" parameterType="com.xtoucher.model.ApprovalHistoryModel">
+		insert into e_approval_history set id=#{id},approval_id=#{approvalId},account_id=#{accountId},handle_time=#{HandleTime},remark=#{remark} 
+	
+	</insert>
+</mapper>
+
